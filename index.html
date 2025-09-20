@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Romeo and Juliet — Act I, Scene I</title>
   <style>
-    /* ====== THEME (kept from previous) ====== */
+
     :root{
       --paper:#faf8f6;
       --bg:#ffffff;
@@ -20,12 +20,12 @@
       --shadow:0 10px 35px rgb(0 0 0 / 0.08);
     }
 
-    /* ====== BASE ====== */
+
     html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
     html{ scroll-behavior:smooth; }
     body{ font-family: ui-serif, Georgia, "Times New Roman", Times, serif; line-height:1.65; }
 
-    /* ====== NAVIGATION ====== */
+
     .skip-link{
       position:absolute; left:-9999px; top:auto;
       width:1px; height:1px; overflow:hidden;
@@ -66,7 +66,7 @@
       font-weight:700;
     }
 
-    /* ====== PAGE WRAPPER ====== */
+
     main{
       max-width:72ch;
       margin:2rem auto 3rem;
@@ -83,7 +83,7 @@
       background:linear-gradient(90deg,var(--capulet),var(--gold),var(--montague));
     }
 
-    /* ====== HEADERS / META ====== */
+
     h1{ margin:.25rem 0 .25rem; line-height:1.15; letter-spacing:.02em; }
     .author{
       font-variant-caps: all-small-caps; letter-spacing:.12em; color:var(--gold);
@@ -97,7 +97,7 @@
       color:var(--muted); border-bottom:2px solid var(--rule); padding-bottom:.4rem;
     }
 
-    /* ====== CONTENT BLOCKS ====== */
+
     .prologue-wrap{
       border:1px solid var(--rule);
       border-left:6px solid var(--capulet);
@@ -150,7 +150,7 @@
     .pill.pri{ border-color: color-mix(in srgb, var(--prince) 35%, var(--rule)); color:var(--prince);}
     .pill.cit{ border-color: color-mix(in srgb, var(--citizen) 35%, var(--rule)); color:var(--citizen);}
 
-    /* Small helper links within sections */
+
     .section-nav{
       display:flex; gap:.75rem; align-items:center; margin:.25rem 0 1rem;
       font-size:.92rem;
@@ -168,10 +168,10 @@
   </style>
 </head>
 <body>
-  <!-- Skip to content for accessibility -->
+
   <a class="skip-link" href="#content">Skip to content</a>
 
-  <!-- Sticky top navigation -->
+
   <nav class="site-nav" aria-label="Main">
     <div class="nav-inner">
       <div class="brand">R&J • Act I</div>
@@ -188,7 +188,7 @@
     <div class="author">by William Shakespeare</div>
     <p class="kicker">ACT I</p>
 
-    <!-- PROLOGUE -->
+ 
     <section class="prologue-wrap" id="prologue">
       <div class="prologue-title">Prologue</div>
       <nav class="section-nav" aria-label="Section navigation">
@@ -215,15 +215,13 @@ What here shall miss, our toil shall strive to mend.
 
     <hr />
 
-    <!-- SCENE I -->
     <section class="scene" aria-labelledby="scene-1" id="scene-1">
       <h2>Scene I. <em>Verona. A public place.</em></h2>
 
       <nav class="section-nav" aria-label="Section navigation">
         <a href="#prologue">← Prev: Prologue</a>
         <a href="#top">↑ Top</a>
-        <!-- When you add Scene II, change the next link below -->
-        <!-- <a href="#scene-2">Next → Scene II</a> -->
+
       </nav>
 
       <div class="legend" aria-label="Speaker legend">
@@ -376,10 +374,10 @@ What here shall miss, our toil shall strive to mend.
     </section>
   </main>
 
-  <!-- Back to top button -->
+
   <a href="#top" class="back-to-top" aria-label="Back to top">Top ↑</a>
 
-  <!-- Tiny script to highlight active nav item -->
+
   <script>
     (function(){
       const links = {
@@ -392,7 +390,7 @@ What here shall miss, our toil shall strive to mend.
         if(id && links[id]) links[id].setAttribute('aria-current','true');
       };
 
-      // Observe sections to update nav highlight
+ 
       const sections = [
         {id:'prologue', el: document.getElementById('prologue')},
         {id:'scene1', el: document.getElementById('scene-1')}
@@ -411,7 +409,7 @@ What here shall miss, our toil shall strive to mend.
 
       sections.forEach(s => obs.observe(s.el));
 
-      // Update on hash navigation
+
       window.addEventListener('hashchange', ()=>{
         const h = location.hash.replace('#','');
         if(h === 'prologue') setActive('prologue');
@@ -419,7 +417,6 @@ What here shall miss, our toil shall strive to mend.
         else setActive('top');
       });
 
-      // Initial state
       if(location.hash === '#prologue') setActive('prologue');
       else if(location.hash === '#scene-1') setActive('scene1');
       else setActive('top');
