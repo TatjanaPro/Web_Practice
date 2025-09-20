@@ -1,13 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" id="top">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Romeo and Juliet — Act I, Scene I</title>
+  <style>
+    /* ====== THEME (kept from previous) ====== */
+    :root{
+      --paper:#faf8f6;
+      --bg:#ffffff;
+      --ink:#14110f;
+      --muted:#6b6b6b;
+      --capulet:#9d1438;
+      --montague:#184a90;
+      --prince:#5b2a86;
+      --citizen:#56646e;
+      --gold:#b98a00;
+      --rule:#e9e4df;
+      --shadow:0 10px 35px rgb(0 0 0 / 0.08);
+    }
+
+    /* ====== BASE ====== */
+    html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+    html{ scroll-behavior:smooth; }
+    body{ font-family: ui-serif, Georgia, "Times New Roman", Times, serif; line-height:1.65; }
+
+    /* ====== NAVIGATION ====== */
+    .skip-link{
+      position:absolute; left:-9999px; top:auto;
+      width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus{
+      position:fixed; left:1rem; top:1rem; width:auto; height:auto;
+      background:#fff; padding:.5rem .75rem; border-radius:8px; outline:2px solid var(--gold);
+      z-index:9999;
+    }
+    nav.site-nav{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter:saturate(140%) blur(6px);
+      background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75));
+      border-bottom:1px solid var(--rule);
+    }
+    .nav-inner{
+      max-width:72ch; margin:0 auto; padding:.4rem 1.25rem;
+      display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;
+    }
+    .brand{
+      font-weight:800; letter-spacing:.04em;
+      padding:.15rem .5rem; border-radius:8px;
+      border:1px solid var(--rule); background:#fff;
+    }
+    .toc{
+      display:flex; gap:.5rem; flex-wrap:wrap; margin-left:auto;
+    }
+    .toc a{
+      display:inline-block; text-decoration:none; color:inherit;
+      padding:.25rem .6rem; border-radius:999px;
+      border:1px solid transparent;
+    }
+    .toc a:hover{ background:#f7f6f4; border-color:var(--rule); }
+    .toc a[aria-current="true"]{
+      border-color: color-mix(in srgb, var(--montague) 30%, var(--rule));
+      background: color-mix(in srgb, var(--montague) 8%, #fff);
+      color: var(--montague);
+      font-weight:700;
+    }
+
+    /* ====== PAGE WRAPPER ====== */
+    main{
+      max-width:72ch;
+      margin:2rem auto 3rem;
+      padding:2rem 1.25rem 2.5rem;
+      background:var(--bg);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    main::before{
+      content:"";
+      position:absolute; inset:0 0 auto 0; height:6px;
+      background:linear-gradient(90deg,var(--capulet),var(--gold),var(--montague));
+    }
+
+    /* ====== HEADERS / META ====== */
+    h1{ margin:.25rem 0 .25rem; line-height:1.15; letter-spacing:.02em; }
+    .author{
+      font-variant-caps: all-small-caps; letter-spacing:.12em; color:var(--gold);
+      font-weight:700; margin:.15rem 0 1rem; display:inline-block;
+      background:linear-gradient(90deg, #fff2, #fff0); padding:.15rem .4rem;
+      border:1px solid color-mix(in srgb, var(--gold) 50%, transparent);
+      border-radius:999px;
+    }
+    .kicker{
+      margin:0 0 1rem; letter-spacing:.08em; text-transform:uppercase; font-size:.9rem;
+      color:var(--muted); border-bottom:2px solid var(--rule); padding-bottom:.4rem;
+    }
+
+    /* ====== CONTENT BLOCKS ====== */
+    .prologue-wrap{
+      border:1px solid var(--rule);
+      border-left:6px solid var(--capulet);
+      border-right:6px solid var(--montague);
+      padding:1rem .9rem; border-radius:12px;
+      background:linear-gradient(180deg,#fff, #fff8);
+      margin:0 0 1.5rem;
+    }
+    .prologue-title{
+      margin:.25rem 0 .75rem; font-weight:700; font-size:1.15rem; color:var(--capulet);
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .prologue-title::after{
+      content:""; flex:1; height:1px;
+      background:linear-gradient(90deg, transparent, var(--rule), transparent);
+    }
+    .prologue{ color:var(--capulet); font-style:italic; }
+    .verse{ white-space: pre-wrap; }
+
+    .scene{ margin:1.75rem 0 0; }
+    .scene h2{ font-size:1.2rem; line-height:1.25; margin:0 0 .25rem; scroll-margin-top:5.5rem; }
+    .scene h2 em{ font-style:italic; color:var(--muted); font-weight:400; }
+
+    .stage{
+      color:var(--muted); font-style:italic; margin:.75rem 0; padding-left:.75rem; border-left:3px solid var(--rule);
+    }
+    .speech{ margin:.35rem 0; padding:.35rem .5rem .45rem; border-bottom:1px dotted var(--rule); }
+    .speech:last-child{ border-bottom:0; }
+
+    .speaker{
+      font-variant-caps: small-caps; font-weight:800; letter-spacing:.03em;
+      padding:.1rem .45rem; border-radius:8px; margin-right:.25rem;
+      background:#f4f2ef; border:1px solid var(--rule);
+    }
+    .speaker[data-house="capulet"]{ color:var(--capulet); border-color: color-mix(in srgb, var(--capulet) 25%, var(--rule)); background: color-mix(in srgb, var(--capulet) 8%, #fff); }
+    .speaker[data-house="montague"]{ color:var(--montague); border-color: color-mix(in srgb, var(--montague) 25%, var(--rule)); background: color-mix(in srgb, var(--montague) 8%, #fff); }
+    .speaker[data-house="prince"]{ color:var(--prince); border-color: color-mix(in srgb, var(--prince) 25%, var(--rule)); background: color-mix(in srgb, var(--prince) 8%, #fff); }
+    .speaker[data-house="citizen"]{ color:var(--citizen); border-color: color-mix(in srgb, var(--citizen) 25%, var(--rule)); background: color-mix(in srgb, var(--citizen) 8%, #fff); }
+
+    hr{
+      border:0; height:2px;
+      background:linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+      margin:1.5rem 0;
+    }
+
+    .legend{ display:flex; gap:.5rem .75rem; flex-wrap:wrap; margin:.5rem 0 1rem; font-size:.9rem; color:var(--muted); }
+    .pill{ border:1px solid var(--rule); padding:.15rem .5rem; border-radius:999px; background:#f7f6f4; }
+    .pill.cap{ border-color: color-mix(in srgb, var(--capulet) 35%, var(--rule)); color:var(--capulet);}
+    .pill.mon{ border-color: color-mix(in srgb, var(--montague) 35%, var(--rule)); color:var(--montague);}
+    .pill.pri{ border-color: color-mix(in srgb, var(--prince) 35%, var(--rule)); color:var(--prince);}
+    .pill.cit{ border-color: color-mix(in srgb, var(--citizen) 35%, var(--rule)); color:var(--citizen);}
+
+    /* Small helper links within sections */
+    .section-nav{
+      display:flex; gap:.75rem; align-items:center; margin:.25rem 0 1rem;
+      font-size:.92rem;
+    }
+    .section-nav a{
+      text-decoration:none; color:var(--montague); border-bottom:1px dotted color-mix(in srgb, var(--montague) 40%, var(--rule));
+    }
+    .back-to-top{
+      position:fixed; right:1rem; bottom:1rem; z-index:999;
+      display:inline-block; text-decoration:none; color:var(--bg);
+      background:linear-gradient(135deg, var(--montague), var(--capulet));
+      padding:.5rem .7rem; border-radius:10px; box-shadow:var(--shadow); border:1px solid #0001;
+      font-size:.9rem;
+    }
+  </style>
+</head>
 <body>
+  <!-- Skip to content for accessibility -->
+  <a class="skip-link" href="#content">Skip to content</a>
 
-<h1>ROMEO AND JULIET</h1>
-<p>ACT I</p>
+  <!-- Sticky top navigation -->
+  <nav class="site-nav" aria-label="Main">
+    <div class="nav-inner">
+      <div class="brand">R&J • Act I</div>
+      <div class="toc" role="tablist">
+        <a href="#top" id="link-top">Top</a>
+        <a href="#prologue" id="link-prologue">Prologue</a>
+        <a href="#scene-1" id="link-scene-1">Scene I</a>
+      </div>
+    </div>
+  </nav>
 
-<strong>PROLOGUE</strong> <br>
-<br>
-<em style="color:rgb(102, 5, 39);">>Two households, both alike in dignity,<br>
+  <main id="content">
+    <h1>ROMEO AND JULIET</h1>
+    <div class="author">by William Shakespeare</div>
+    <p class="kicker">ACT I</p>
+
+    <!-- PROLOGUE -->
+    <section class="prologue-wrap" id="prologue">
+      <div class="prologue-title">Prologue</div>
+      <nav class="section-nav" aria-label="Section navigation">
+        <a href="#top">↑ Top</a>
+        <a href="#scene-1">Next → Scene I</a>
+      </nav>
+      <p class="prologue verse">
+Two households, both alike in dignity,<br>
 In fair Verona, where we lay our scene,<br>
 From ancient grudge break to new mutiny,<br>
 Where civil blood makes civil hands unclean.<br>
@@ -20,199 +209,221 @@ And the continuance of their parents' rage,<br>
 Which, but their children's end, nought could remove,<br>
 Is now the two hours' traffic of our stage;<br>
 The which if you with patient ears attend,<br>
-What here shall miss, our toil shall strive to mend.</em> 
-<br>
-<br>
-<strong>SCENE I.</strong> <em>Verona. A public place.</em>  <br>
+What here shall miss, our toil shall strive to mend.
+      </p>
+    </section>
 
-<p>Enter SAMPSON and GREGORY, of the house of Capulet, armed with swords and bucklers</p>
+    <hr />
 
-<strong>SAMPSON:</strong> 
-Gregory, o' my word, we'll not carry coals.<br>
-<strong>GREGORY:</strong> 
-No, for then we should be colliers.<br>
-<strong>SAMPSON:</strong> 
-I mean, an we be in choler, we'll draw.<br>
-<strong>GREGORY:</strong> 
-Ay, while you live, draw your neck out o' the collar.<br>
-<strong>SAMPSON:</strong> 
-I strike quickly, being moved.<br>
-<strong>GREGORY:</strong> 
-But thou art not quickly moved to strike.<br>
-<strong>SAMPSON:</strong> 
-A dog of the house of Montague moves me.<br>
-<strong>GREGORY:</strong> 
-To move is to stir; and to be valiant is to stand:<br>
-therefore, if thou art moved, thou runn'st away.<br>
-<strong>SAMPSON:</strong> 
-A dog of that house shall move me to stand: I will<br>
-take the wall of any man or maid of Montague's.<br>
-<strong>GREGORY:</strong> 
-That shows thee a weak slave; for the weakest goes<br>
-to the wall.<br>
-<strong>SAMPSON:</strong> 
-True; and therefore women, being the weaker vessels,<br>
-are ever thrust to the wall: therefore I will push<br>
-Montague's men from the wall, and thrust his maids<br>
-to the wall.<br>
-<strong>GREGORY:</strong> 
-The quarrel is between our masters and us their men.<br>
-<strong>SAMPSON:</strong> 
-'Tis all one, I will show myself a tyrant: when I<br>
-have fought with the men, I will be cruel with the<br>
-maids, and cut off their heads.<br>
-<strong>GREGORY:</strong> 
-The heads of the maids?<br>
-<strong>SAMPSON:</strong> 
-Ay, the heads of the maids, or their maidenheads;<br>
-take it in what sense thou wilt.<br>
-<strong>GREGORY:</strong> 
-They must take it in sense that feel it.<br>
-<strong>SAMPSON:</strong> 
-Me they shall feel while I am able to stand: and<br>
-'tis known I am a pretty piece of flesh.<br>
-<strong>GREGORY:</strong> 
-'Tis well thou art not fish; if thou hadst, thou<br>
-hadst been poor John. Draw thy tool! here comes<br>
-two of the house of the Montagues.<br>
-<strong>SAMPSON:</strong> 
-My naked weapon is out: quarrel, I will back thee.<br>
-<strong>GREGORY:</strong> 
-How! turn thy back and run?<br>
-<strong>SAMPSON:</strong> 
-Fear me not.<br>
-<strong>GREGORY:</strong> 
-No, marry; I fear thee!<br>
-<strong>SAMPSON:</strong> 
-Let us take the law of our sides; let them begin.<br>
-<strong>GREGORY:</strong> 
-I will frown as I pass by, and let them take it as<br>
-they list.<br>
-<strong>SAMPSON:</strong> 
-Nay, as they dare. I will bite my thumb at them;<br>
-which is a disgrace to them, if they bear it.<br>
-<br>
-Enter ABRAHAM and BALTHASAR<br>
-<strong>ABRAHAM:</strong> 
-Do you bite your thumb at us, sir?<br>
-<strong>SAMPSON:</strong> 
-I do bite my thumb, sir.<br>
-<strong>ABRAHAM:</strong> 
-Do you bite your thumb at us, sir?<br>
-<strong>SAMPSON:</strong> 
-[Aside to GREGORY] Is the law of our side, if I say<br>
-ay?<br>
-<strong>GREGORY:</strong> 
-No.<br>
-<strong>SAMPSON:</strong> 
-No, sir, I do not bite my thumb at you, sir, but I<br>
-bite my thumb, sir.<br>
-<strong>GREGORY:</strong> 
-Do you quarrel, sir?<br>
-<strong>ABRAHAM:</strong> 
-Quarrel sir! no, sir.<br>
-<strong>SAMPSON:</strong> 
-If you do, sir, I am for you: I serve as good a man as you.<br>
-<strong>ABRAHAM:</strong> 
-No better.<br>
-<strong>SAMPSON:</strong> 
-Well, sir.<br>
-<strong>GREGORY:</strong> 
-Say 'better:' here comes one of my master's kinsmen.<br>
-<strong>SAMPSON:</strong>  
-Yes, better, sir.<br>
-<strong>ABRAHAM:</strong> 
-You lie.<br>
-<strong>SAMPSON:</strong> 
-Draw, if you be men. Gregory, remember thy swashing blow.<br>
+    <!-- SCENE I -->
+    <section class="scene" aria-labelledby="scene-1" id="scene-1">
+      <h2>Scene I. <em>Verona. A public place.</em></h2>
 
-<p>They fight <br>
-Enter BENVOLIO <br>
-</p>
-<strong>BENVOLIO:</strong> 
-Part, fools! <br>
-Put up your swords; you know not what you do. <br>
-Beats down their swords <br>
+      <nav class="section-nav" aria-label="Section navigation">
+        <a href="#prologue">← Prev: Prologue</a>
+        <a href="#top">↑ Top</a>
+        <!-- When you add Scene II, change the next link below -->
+        <!-- <a href="#scene-2">Next → Scene II</a> -->
+      </nav>
 
-<p></p>Enter TYBALT</p> <br>
-<strong>TYBALT:</strong> 
-What, art thou drawn among these heartless hinds?<br>
-Turn thee, Benvolio, look upon thy death.<br>
-<strong>BENVOLIO:</strong> 
-I do but keep the peace: put up thy sword,<br>
-Or manage it to part these men with me.<br>
-<strong>TYBALT:</strong> 
-What, drawn, and talk of peace! I hate the word,<br>
-As I hate hell, all Montagues, and thee:<br>
-Have at thee, coward!<br>
-<p>They fight <br> </p>
-  
-<p>Enter, several of both houses, who join the fray; then enter Citizens, with clubs<br>
-First Citizen<br>
-Clubs, bills, and partisans! strike! beat them down!<br>
-Down with the Capulets! down with the Montagues!<br>
-Enter CAPULET in his gown, and LADY CAPULET</p><br>
-<strong>CAPULET:</strong> 
-What noise is this? Give me my long sword, ho!<br>
+      <div class="legend" aria-label="Speaker legend">
+        <span class="pill cap">Capulet house</span>
+        <span class="pill mon">Montague house</span>
+        <span class="pill pri">Prince / Court</span>
+        <span class="pill cit">Citizens</span>
+      </div>
 
-  <strong>LADY CAPULET:</strong> 
-A crutch, a crutch! why call you for a sword?<br>
-<strong>CAPULET:</strong> 
-My sword, I say! Old Montague is come,<br>
-And flourishes his blade in spite of me.<br>
-  
-<p>Enter MONTAGUE and LADY MONTAGUE<br> </p>
-<strong>MONTAGUE:</strong> 
-Thou villain Capulet,--Hold me not, let me go.<br>
-<strong>LADY MONTAGUE:</strong> 
-Thou shalt not stir a foot to seek a foe.<br>
-<p>Enter PRINCE, with Attendants</p><br>
-<strong>PRINCE:</strong> 
-<p>Rebellious subjects, enemies to peace,<br>
-Profaners of this neighbour-stained steel,<br>
-Will they not hear? What, ho! you men, you beasts,<br>
-That quench the fire of your pernicious rage<br>
-With purple fountains issuing from your veins,<br>
-On pain of torture, from those bloody hands<br>
-Throw your mistemper'd weapons to the ground,<br>
-And hear the sentence of your moved prince.<br>
-Three civil brawls, bred of an airy word,<br>
-By thee, old Capulet, and Montague,<br>
-Have thrice disturb'd the quiet of our streets,<br>
-And made Verona's ancient citizens<br>
-Cast by their grave beseeming ornaments,<br>
-To wield old partisans, in hands as old,<br>
-Canker'd with peace, to part your canker'd hate:<br>
-If ever you disturb our streets again,<br>
-Your lives shall pay the forfeit of the peace.<br>
-For this time, all the rest depart away:<br>
-You Capulet; shall go along with me:<br>
-And, Montague, come you this afternoon,<br>
-To know our further pleasure in this case,<br>
-To old Free-town, our common judgment-place.<br>
-Once more, on pain of death, all men depart.<br>
-Exeunt all but MONTAGUE, LADY MONTAGUE, and BENVOLIO<br></p>
-  
-<strong>MONTAGUE:</strong> 
-Who set this ancient quarrel new abroach?<br>
-Speak, nephew, were you by when it began?<br>
-  <strong>BENVOLIO:</strong> 
+      <p class="stage">Enter SAMPSON and GREGORY, of the house of Capulet, armed with swords and bucklers</p>
 
-<p>Here were the servants of your adversary,<br>
-And yours, close fighting ere I did approach:<br>
-I drew to part them: in the instant came<br>
-The fiery Tybalt, with his sword prepared,<br>
-Which, as he breathed defiance to my ears,<br>
-He swung about his head and cut the winds,<br>
-Who nothing hurt withal hiss'd him in scorn:<br>
-While we were interchanging thrusts and blows,<br>
-Came more and more and fought on part and part,<br>
-Till the prince came, who parted either part.<br></p>
-  <strong>LADY MONTAGUE:</strong> 
-O, where is Romeo? saw you him to-day?<br>
-Right glad I am he was not at this fray.<br>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Gregory, o' my word, we'll not carry coals.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> No, for then we should be colliers.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> I mean, an we be in choler, we'll draw.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> Ay, while you live, draw your neck out o' the collar.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> I strike quickly, being moved.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> But thou art not quickly moved to strike.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> A dog of the house of Montague moves me.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> To move is to stir; and to be valiant is to stand:<br>
+      therefore, if thou art moved, thou runn'st away.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> A dog of that house shall move me to stand: I will<br>
+      take the wall of any man or maid of Montague's.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> That shows thee a weak slave; for the weakest goes<br>
+      to the wall.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> True; and therefore women, being the weaker vessels,<br>
+      are ever thrust to the wall: therefore I will push<br>
+      Montague's men from the wall, and thrust his maids<br>
+      to the wall.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> The quarrel is between our masters and us their men.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> 'Tis all one, I will show myself a tyrant: when I<br>
+      have fought with the men, I will be cruel with the<br>
+      maids, and cut off their heads.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> The heads of the maids?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Ay, the heads of the maids, or their maidenheads;<br>
+      take it in what sense thou wilt.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> They must take it in sense that feel it.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Me they shall feel while I am able to stand: and<br>
+      'tis known I am a pretty piece of flesh.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> 'Tis well thou art not fish; if thou hadst, thou<br>
+      hadst been poor John. Draw thy tool! here comes<br>
+      two of the house of the Montagues.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> My naked weapon is out: quarrel, I will back thee.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> How! turn thy back and run?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Fear me not.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> No, marry; I fear thee!</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Let us take the law of our sides; let them begin.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> I will frown as I pass by, and let them take it as<br>
+      they list.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Nay, as they dare. I will bite my thumb at them;<br>
+      which is a disgrace to them, if they bear it.</p>
 
+      <p class="stage">Enter ABRAHAM and BALTHASAR</p>
 
+      <p class="speech"><span class="speaker" data-house="montague">Abraham:</span> Do you bite your thumb at us, sir?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> I do bite my thumb, sir.</p>
+      <p class="speech"><span class="speaker" data-house="montague">Abraham:</span> Do you bite your thumb at us, sir?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> [Aside to Gregory] Is the law of our side, if I say<br>
+      ay?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> No.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> No, sir, I do not bite my thumb at you, sir, but I<br>
+      bite my thumb, sir.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> Do you quarrel, sir?</p>
+      <p class="speech"><span class="speaker" data-house="montague">Abraham:</span> Quarrel sir! no, sir.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> If you do, sir, I am for you: I serve as good a man as you.</p>
+      <p class="speech"><span class="speaker" data-house="montague">Abraham:</span> No better.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Well, sir.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Gregory:</span> Say “better:” here comes one of my master's kinsmen.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Yes, better, sir.</p>
+      <p class="speech"><span class="speaker" data-house="montague">Abraham:</span> You lie.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Sampson:</span> Draw, if you be men. Gregory, remember thy swashing blow.</p>
 
+      <p class="stage">They fight. Enter BENVOLIO.</p>
+
+      <p class="speech"><span class="speaker" data-house="montague">Benvolio:</span> Part, fools!<br>
+      Put up your swords; you know not what you do.</p>
+      <p class="stage">Beats down their swords</p>
+
+      <p class="stage">Enter TYBALT</p>
+
+      <p class="speech"><span class="speaker" data-house="capulet">Tybalt:</span> What, art thou drawn among these heartless hinds?<br>
+      Turn thee, Benvolio, look upon thy death.</p>
+      <p class="speech"><span class="speaker" data-house="montague">Benvolio:</span> I do but keep the peace: put up thy sword,<br>
+      Or manage it to part these men with me.</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Tybalt:</span> What, drawn, and talk of peace! I hate the word,<br>
+      As I hate hell, all Montagues, and thee:<br>
+      Have at thee, coward!</p>
+
+      <p class="stage">They fight</p>
+
+      <p class="stage">Enter, several of both houses, who join the fray; then enter Citizens, with clubs<br>
+      First Citizen: Clubs, bills, and partisans! strike! beat them down!<br>
+      Down with the Capulets! down with the Montagues!</p>
+
+      <p class="stage">Enter CAPULET in his gown, and LADY CAPULET</p>
+
+      <p class="speech"><span class="speaker" data-house="capulet">Capulet:</span> What noise is this? Give me my long sword, ho!</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Lady Capulet:</span> A crutch, a crutch! why call you for a sword?</p>
+      <p class="speech"><span class="speaker" data-house="capulet">Capulet:</span> My sword, I say! Old Montague is come,<br>
+      And flourishes his blade in spite of me.</p>
+
+      <p class="stage">Enter MONTAGUE and LADY MONTAGUE</p>
+
+      <p class="speech"><span class="speaker" data-house="montague">Montague:</span> Thou villain Capulet,—Hold me not, let me go.</p>
+      <p class="speech"><span class="speaker" data-house="montague">Lady Montague:</span> Thou shalt not stir a foot to seek a foe.</p>
+
+      <p class="stage">Enter PRINCE, with Attendants</p>
+
+      <p class="speech"><span class="speaker" data-house="prince">Prince:</span> <span class="verse">Rebellious subjects, enemies to peace,<br>
+      Profaners of this neighbour-stained steel,<br>
+      Will they not hear? What, ho! you men, you beasts,<br>
+      That quench the fire of your pernicious rage<br>
+      With purple fountains issuing from your veins,<br>
+      On pain of torture, from those bloody hands<br>
+      Throw your mistemper'd weapons to the ground,<br>
+      And hear the sentence of your moved prince.<br>
+      Three civil brawls, bred of an airy word,<br>
+      By thee, old Capulet, and Montague,<br>
+      Have thrice disturb'd the quiet of our streets,<br>
+      And made Verona's ancient citizens<br>
+      Cast by their grave beseeming ornaments,<br>
+      To wield old partisans, in hands as old,<br>
+      Canker'd with peace, to part your canker'd hate:<br>
+      If ever you disturb our streets again,<br>
+      Your lives shall pay the forfeit of the peace.<br>
+      For this time, all the rest depart away:<br>
+      You Capulet; shall go along with me:<br>
+      And, Montague, come you this afternoon,<br>
+      To know our further pleasure in this case,<br>
+      To old Free-town, our common judgment-place.<br>
+      Once more, on pain of death, all men depart.</span></p>
+
+      <p class="stage">Exeunt all but MONTAGUE, LADY MONTAGUE, and BENVOLIO</p>
+
+      <p class="speech"><span class="speaker" data-house="montague">Montague:</span> Who set this ancient quarrel new abroach?<br>
+      Speak, nephew, were you by when it began?</p>
+
+      <p class="speech"><span class="speaker" data-house="montague">Benvolio:</span> <span class="verse">Here were the servants of your adversary,<br>
+      And yours, close fighting ere I did approach:<br>
+      I drew to part them: in the instant came<br>
+      The fiery Tybalt, with his sword prepared,<br>
+      Which, as he breathed defiance to my ears,<br>
+      He swung about his head and cut the winds,<br>
+      Who nothing hurt withal hiss'd him in scorn:<br>
+      While we were interchanging thrusts and blows,<br>
+      Came more and more and fought on part and part,<br>
+      Till the prince came, who parted either part.</span></p>
+
+      <p class="speech"><span class="speaker" data-house="montague">Lady Montague:</span> O, where is Romeo? saw you him to-day?<br>
+      Right glad I am he was not at this fray.</p>
+    </section>
+  </main>
+
+  <!-- Back to top button -->
+  <a href="#top" class="back-to-top" aria-label="Back to top">Top ↑</a>
+
+  <!-- Tiny script to highlight active nav item -->
+  <script>
+    (function(){
+      const links = {
+        top: document.getElementById('link-top'),
+        prologue: document.getElementById('link-prologue'),
+        scene1: document.getElementById('link-scene-1')
+      };
+      const setActive = (id) => {
+        Object.values(links).forEach(a => a && a.removeAttribute('aria-current'));
+        if(id && links[id]) links[id].setAttribute('aria-current','true');
+      };
+
+      // Observe sections to update nav highlight
+      const sections = [
+        {id:'prologue', el: document.getElementById('prologue')},
+        {id:'scene1', el: document.getElementById('scene-1')}
+      ].filter(s => s.el);
+
+      const obs = new IntersectionObserver((entries)=>{
+        // Pick the most visible section
+        const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+        if(visible){
+          const sid = visible.target.id === 'scene-1' ? 'scene1' : 'prologue';
+          setActive(sid);
+        } else {
+          setActive('top');
+        }
+      }, {rootMargin:'-40% 0px -55% 0px', threshold:[0, .25, .5, .75, 1]});
+
+      sections.forEach(s => obs.observe(s.el));
+
+      // Update on hash navigation
+      window.addEventListener('hashchange', ()=>{
+        const h = location.hash.replace('#','');
+        if(h === 'prologue') setActive('prologue');
+        else if(h === 'scene-1') setActive('scene1');
+        else setActive('top');
+      });
+
+      // Initial state
+      if(location.hash === '#prologue') setActive('prologue');
+      else if(location.hash === '#scene-1') setActive('scene1');
+      else setActive('top');
+    })();
+  </script>
 </body>
 </html>
